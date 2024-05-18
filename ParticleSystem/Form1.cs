@@ -13,43 +13,41 @@ namespace ParticleSystem
     public partial class Form1 : Form
     {
         List<Particle> particles = new List<Particle>();
+        Emitter emitter = new Emitter();
+
+        // добавляем переменные для хранения положения мыши
+        private int MousePositionX = 0;
+        private int MousePositionY = 0;
         public Form1()
         {
             InitializeComponent();
 
             picDisplay.Image = new Bitmap(picDisplay.Width, picDisplay.Height);
-
-            // генерирую 500 частиц
-            for (var i = 0; i < 200; ++i)
-            {
-                var particle = new Particle();
-                // переношу частицы в центр изображения
-                particle.X = picDisplay.Image.Width / 2;
-                particle.Y = picDisplay.Image.Height / 2;
-                // добавляю список
-                particles.Add(particle);
-            }
+            // добавил точечку
+            emitter.gravityPoints.Add(new Point(
+                picDisplay.Width / 2, picDisplay.Height / 2
+            ));
         }
 
         int counter = 0; // добавлю счетчик чтобы считать вызовы функции
         private void timer1_Tick(object sender, EventArgs e)
         {
-            counter++;
+            emitter.UpdateState();
+
             using (var g = Graphics.FromImage(picDisplay.Image))
             {
-                // рисую на изображении сколько насчитал
-                g.DrawString(
-                    counter.ToString(), // значения счетчика в виде строки
-                    new Font("Arial", 12), // шрифт
-                    new SolidBrush(Color.Black), // цвет
-                    new PointF
-                    { // по центру экрана
-                        X = picDisplay.Image.Width / 2,
-                        Y = picDisplay.Image.Height / 2
-                    }
-                );
+                g.Clear(Color.Black); // А ЕЩЕ ЧЕРНЫЙ ФОН СДЕЛАЮ
+                emitter.Render(g);
             }
+
             picDisplay.Invalidate();
+        }
+
+        private void picDisplay_MouseMove(object sender, MouseEventArgs e)
+        {
+            // в обработчике заносим положение мыши в переменные для хранения положения мыши
+            emitter.MousePositionX = e.X;
+            emitter.MousePositionY = e.Y;
         }
     }
 }
