@@ -17,6 +17,10 @@ namespace ParticleSystem
         public float SpeedX; // скорость перемещения по оси X
         public float SpeedY; // скорость перемещения по оси Y
 
+        public Color FromColor;
+        public Color ToColor;
+
+
         // добавили генератор случайных чисел
         public static Random rand = new Random();
 
@@ -58,8 +62,8 @@ namespace ParticleSystem
     public class ParticleColorful : Particle
     {
         // два новых поля под цвет начальный и конечный
-        public Color FromColor;
-        public Color ToColor;
+        //public Color FromColor;
+        //public Color ToColor;
 
         // для смеси цветов
         public static Color MixColor(Color color1, Color color2, float k)
