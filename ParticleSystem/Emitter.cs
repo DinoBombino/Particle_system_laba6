@@ -11,16 +11,13 @@ namespace ParticleSystem
     {
         List<Particle> particles = new List<Particle>();
         public List<IImpactPoint> impactPoints = new List<IImpactPoint>();
-       // public List<Point> gravityPoints = new List<Point>();
 
-        public int MousePositionX;
-        public int MousePositionY;
         public float GravitationX = 0;
         public float GravitationY = 1; // пусть гравитация будет силой один пиксель за такт, нам хватит
 
-        public int ParticlesCount = 500;
+        public int ParticlesCount = 500;//Количество частиц
 
-        public int X; // координата X центра эмиттера, будем ее использовать вместо MousePositionX
+        public int X; // координата X центра эмиттера
         public int Y; // соответствующая координата Y 
         public int Direction = 0; // вектор направления в градусах куда сыпет эмиттер
         public int Spreading = 360; // разброс частиц относительно Direction
@@ -30,7 +27,7 @@ namespace ParticleSystem
         public int RadiusMax = 10; // максимальный радиус частицы
         public int LifeMin = 20; // минимальное время жизни частицы
         public int LifeMax = 100; // максимальное время жизни частицы
-        public int ParticlesPerTick = 10;
+        public int ParticlesPerTick = 10;//
 
         public Color ColorFrom = Color.White; // начальный цвет частицы
         public Color ColorTo = Color.FromArgb(0, Color.Black); // конечный цвет частиц
@@ -83,10 +80,6 @@ namespace ParticleSystem
                     particles.Add(particle);
                 }
             }
-
-
-
-
         }
 
         // добавил новый метод, виртуальным, чтобы переопределять можно было
@@ -121,8 +114,24 @@ namespace ParticleSystem
             foreach (var point in impactPoints)
             {
                 point.Render(g); // это добавили
-            }
-            
+            }  
+        }
+    }
+
+    public class TopEmitter : Emitter
+    {
+        public int Width; // длина экрана
+
+        public override void ResetParticle(Particle particle)
+        {
+            base.ResetParticle(particle); // вызываем базовый сброс частицы, там жизнь переопределяется и все такое
+
+            // а теперь тут уже подкручиваем параметры движения
+            particle.X = Particle.rand.Next(Width); // позиция X -- произвольная точка от 0 до Width
+            particle.Y = 0;  // ноль -- это верх экрана 
+
+            particle.SpeedY = 1; // падаем вниз по умолчанию
+            particle.SpeedX = Particle.rand.Next(-2, 2); // разброс влево и вправа у частиц 
         }
     }
 }

@@ -20,25 +20,8 @@ namespace ParticleSystem
         public Color FromColor;
         public Color ToColor;
 
-
         // добавили генератор случайных чисел
         public static Random rand = new Random();
-
-        // конструктор по умолчанию будет создавать кастомную частицу
-        public Particle()
-        {
-            // генерируем произвольное направление и скорость
-            var direction = (double)rand.Next(360);
-            var speed = 1 + rand.Next(10);
-
-            // рассчитываем вектор скорости
-            SpeedX = (float)(Math.Cos(direction / 180 * Math.PI) * speed);
-            SpeedY = -(float)(Math.Sin(direction / 180 * Math.PI) * speed);
-
-            // а это не трогаем
-            Radius = 2 + rand.Next(10);
-            Life = 20 + rand.Next(100);
-        }
 
         public virtual void Draw(Graphics g)
         {
@@ -61,9 +44,7 @@ namespace ParticleSystem
     // новый класс для цветных частиц
     public class ParticleColorful : Particle
     {
-        // два новых поля под цвет начальный и конечный
-        //public Color FromColor;
-        //public Color ToColor;
+        // два новых поля под цвет начальный и конечный;
 
         // для смеси цветов
         public static Color MixColor(Color color1, Color color2, float k)

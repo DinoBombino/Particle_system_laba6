@@ -31,7 +31,7 @@ namespace ParticleSystem
 
     public class ColorPoint : IImpactPoint
     {
-        public int Power = 100; // сила притяжения
+        public int Size = 100; // сила притяжения
         public Color FromColor;
         public Color ToColor;
 
@@ -42,7 +42,7 @@ namespace ParticleSystem
             float gY = Y - particle.Y;
 
             double r = Math.Sqrt(gX * gX + gY * gY); // считаем расстояние от центра точки до центра частицы
-            if (r - particle.Radius < Power / 2) // если частица оказалось внутри окружности
+            if (r - particle.Radius < Size / 2) // если частица оказалось внутри окружности
             {
                 particle.FromColor = FromColor;
                 particle.ToColor = ToColor;
@@ -51,31 +51,14 @@ namespace ParticleSystem
         }
         public override void Render(Graphics g)
         {
-            // буду рисовать окружность с диаметром равным Power
+            // буду рисовать окружность с диаметром равным Size
             g.DrawEllipse(
                    new Pen(FromColor, 5),
-                   X - Power / 2,
-                   Y - Power / 2,
-                   Power,
-                   Power
+                   X - Size / 2,
+                   Y - Size / 2,
+                   Size,
+                   Size
                );
-        }
-    }
-
-    public class TopEmitter : Emitter
-    {
-        public int Width; // длина экрана
-
-        public override void ResetParticle(Particle particle)
-        {
-            base.ResetParticle(particle); // вызываем базовый сброс частицы, там жизнь переопределяется и все такое
-
-            // а теперь тут уже подкручиваем параметры движения
-            particle.X = Particle.rand.Next(Width); // позиция X -- произвольная точка от 0 до Width
-            particle.Y = 0;  // ноль -- это верх экрана 
-
-            particle.SpeedY = 1; // падаем вниз по умолчанию
-            particle.SpeedX = Particle.rand.Next(-2, 2); // разброс влево и вправа у частиц 
         }
     }
 }

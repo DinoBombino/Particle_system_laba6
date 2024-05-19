@@ -13,7 +13,6 @@ namespace ParticleSystem
     public partial class Rainbow : Form
     {
         List<Particle> particles = new List<Particle>();
-        //Emitter emitter = new Emitter();
         Emitter emitter; // добавим поле для эмиттера
 
         ColorPoint point1; // добавил поле под первую точку
@@ -24,9 +23,6 @@ namespace ParticleSystem
         ColorPoint point6; // добавил поле под третью точку
         ColorPoint point7;
 
-        // добавляем переменные для хранения положения мыши
-        private int MousePositionX = 0;
-        private int MousePositionY = 0;
         public Rainbow()
         {
             InitializeComponent();
@@ -35,15 +31,13 @@ namespace ParticleSystem
 
             emitter = new TopEmitter
             {
-                ColorFrom = Color.White,
-                ColorTo = Color.FromArgb(0, Color.Black),
                 Width = picDisplay.Width,
                 GravitationY = 0.25f
             };
 
             point1 = new ColorPoint
             {
-                Power = 50,
+                Size = 50,
                 X = /*(float)(picDisplay.Width * 0.25)*/50,
                 Y = /*picDisplay.Height / 2*/50,
                 //ToColor = Color.Black,
@@ -51,7 +45,7 @@ namespace ParticleSystem
             };
             point2 = new ColorPoint
             {
-                Power = 50,
+                Size = 50,
                 X = /*picDisplay.Width / 2 - 100*/150,
                 Y = /*picDisplay.Height / 2*/60,
                 //ToColor = Color.Black,
@@ -59,7 +53,7 @@ namespace ParticleSystem
             };
             point3 = new ColorPoint
             {
-                Power = 50,
+                Size = 50,
                 X = /*(float)(picDisplay.Width * 0.75)*/250,
                 Y = /*picDisplay.Height / 2*/70,
                 //ToColor = Color.Black,
@@ -67,7 +61,7 @@ namespace ParticleSystem
             };
             point4 = new ColorPoint
             {
-                Power = 50,
+                Size = 50,
                 X = 350,
                 Y = 80,
                 //ToColor = Color.Black,
@@ -75,7 +69,7 @@ namespace ParticleSystem
             };
             point5 = new ColorPoint
             {
-                Power = 50,
+                Size = 50,
                 X = 450,
                 Y = 70,
                 //ToColor = Color.Black,
@@ -83,7 +77,7 @@ namespace ParticleSystem
             };
             point6 = new ColorPoint
             {
-                Power = 50,
+                Size = 50,
                 X = 550,
                 Y = 60,
                 //ToColor = Color.Black,
@@ -91,7 +85,7 @@ namespace ParticleSystem
             };
             point7 = new ColorPoint
             {
-                Power = 50,
+                Size = 50,
                 X = 650,
                 Y = 50,
                 //ToColor = Color.Black,
@@ -118,13 +112,6 @@ namespace ParticleSystem
             }
 
             picDisplay.Invalidate();
-        }
-
-        private void picDisplay_MouseMove(object sender, MouseEventArgs e)
-        {
-            // в обработчике заносим положение мыши в переменные для хранения положения мыши
-            emitter.MousePositionX = e.X;
-            emitter.MousePositionY = e.Y;
         }
 
         private void trackBarForRed_Scroll(object sender, EventArgs e)
